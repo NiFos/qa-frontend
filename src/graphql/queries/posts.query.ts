@@ -5,29 +5,51 @@ export const postsQueries = {
     query Post($id: String) {
       Post(id: $id) {
         id
-        authorId
+        author {
+          id
+          username
+        }
         title
         message
         category
         comments {
-          authorId
+          id
+          author {
+            id
+            username
+          }
           message
           votes
         }
       }
     }
   `,
+  GET_CATEGORIES: gql`
+    query Categories {
+      Categories {
+        title
+        id
+        img
+      }
+    }
+  `,
   GET_CATEGORY: gql`
-    query Category($id: Int) {
+    query Category($id: String, $after: String, $pageSize: Int) {
       Category(id: $id) {
-        posts {
-          id
-          authorId
-          title
-          message
+        title
+        posts(after: $after, pageSize: $pageSize) {
+          posts {
+            id
+            author {
+              id
+              username
+            }
+            title
+            message
+          }
+          hasMore
+          cursor
         }
-        hasMore
-        cursor
       }
     }
   `,

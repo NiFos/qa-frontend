@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const userQueries = {
   GET_OAUTH_URL: gql`
-    query GetOauthUrl($type: String) {
+    query GetOauthUrl($type: OauthEnum) {
       GetOauthUrl(type: $type)
     }
   `,

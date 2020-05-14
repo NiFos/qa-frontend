@@ -1,13 +1,13 @@
 import gql from 'graphql-tag';
 
-export const postsQueries = {
+export const postsMutation = {
   CREATE_POST: gql`
-    mutation CreatePost($data: {title: String, message: String, category: Int}) {
+    mutation CreatePost($data: PostInput) {
       CreatePost(data: $data)
     }
   `,
   UPDATE_POST: gql`
-    mutation UpdatePost($data: {title: String, message: String, category: Int, id: String}) {
+    mutation UpdatePost($data: PostInput) {
       UpdatePost(data: $data)
     }
   `,

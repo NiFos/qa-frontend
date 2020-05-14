@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const postsQueries = {
+export const commentsMutation = {
   CREATE_COMMENT: gql`
-    mutation CreateComment($data: {id: String, Message: String}) {
+    mutation CreateComment($data: CommentInput) {
       CreateComment(data: $data)
     }
   `,
@@ -12,13 +12,13 @@ export const postsQueries = {
     }
   `,
   UPDATE_COMMENT: gql`
-    mutation UpdateComment($data: {id: String, Message: String}) {
+    mutation UpdateComment($data: CommentInput) {
       UpdateComment(data: $data)
     }
   `,
   UPVOTE_COMMENT: gql`
-    mutation UpvoteComment($id: String, message: String) {
-      UpvoteComment(id: $id, message: $message)
+    mutation UpvoteComment($id: String, $up: Boolean) {
+      UpvoteComment(id: $id, up: $up)
     }
   `
 }

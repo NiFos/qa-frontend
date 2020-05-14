@@ -1,13 +1,13 @@
 import gql from 'graphql-tag';
 
-export const postsQueries = {
+export const authMutation = {
   LOGIN: gql`
-    mutation Login($data: {email: String, password: String}) {
+    mutation Login($data: LoginInput) {
       Login(data: $data)
     }
   `,
   REG: gql`
-    mutation Reg($data: {username: String, email: String, password: String}) {
+    mutation Reg($data: RegInput) {
       Reg(data: $data)
     }
   `,

@@ -25,6 +25,7 @@ export const userQueries = {
         username
         email
         posts {
+          id
           title
         }
       }

@@ -32,11 +32,12 @@ interface Props {
 
 function Category(props: Props) {
   const [postDrawer, setPostDrawer] = React.useState(false);
+  const pageSize = 10;
   const { data, loading, error, fetchMore, client } = useQuery(postsQueries.GET_CATEGORY, {
     variables: {
       id: props.match.params.id,
       after: '',
-      pageSize: 2,
+      pageSize: pageSize,
     },
     fetchPolicy: 'network-only'
   });
@@ -76,7 +77,7 @@ function Category(props: Props) {
       variables: {
         id: props.match.params.id,
         after: data.Category.posts.cursor as string,
-        pageSize: 10,
+        pageSize: pageSize,
       },
       updateQuery: (prev, { fetchMoreResult, variables }) => {
         if (!fetchMoreResult) return prev;

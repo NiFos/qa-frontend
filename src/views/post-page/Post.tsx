@@ -59,7 +59,8 @@ function Post(props: Props) {
           ? <Loading />
           : error
             ? <Typography variant={'h4'} color={'error'}>{error}</Typography>
-            : (
+            : data.Post
+              ? (
               <Container>
                 <Typography variant={'h5'}>{data.Post.title}</Typography>
                 <Typography variant={'body1'}>{data.Post.message}</Typography>
@@ -67,6 +68,7 @@ function Post(props: Props) {
                 <Comments comments={data.Post.comments} userVoteComments={[]} vote={voteHandler} createComment={submitHandler} />
               </Container>
             )
+            : 'No post'
       }
     </React.Fragment>
   );

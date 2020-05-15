@@ -4,6 +4,7 @@ import { Main } from './main-page/Main';
 import { LoginPage } from './login-page/LoginPage';
 import { Category } from './category-page/Category';
 import { Post } from './post-page/Post';
+import { User } from './user-page/User';
 
 interface Props { }
 export function Routes(props: Props) {
@@ -21,7 +22,7 @@ export function Routes(props: Props) {
         <Category />
       </Route>
       <Route path='/user/:id' >
-        <LoginPage />
+        <User />
       </Route>
       <Route path='/' exact>
         <Main />

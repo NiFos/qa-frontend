@@ -25,11 +25,18 @@ export const postsQueries = {
     }
   `,
   GET_CATEGORIES: gql`
-    query Categories {
+    query Categories($pageSize: Int) {
       Categories {
         title
         id
         img
+        posts(pageSize: $pageSize) {
+          posts {
+            id
+            title
+            message
+          }
+        }
       }
     }
   `,

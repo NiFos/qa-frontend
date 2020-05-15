@@ -45,8 +45,8 @@ export function AddPostDrawer(props: Props) {
       );
     });
     categories.unshift(
-      <option value={''}></option>
-    )
+      <option value={''} key={'none'}></option>
+    );
     return (
       <FormControl>
         <InputLabel htmlFor={'newPost'}>{localization('category')}</InputLabel>

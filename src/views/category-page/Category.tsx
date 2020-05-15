@@ -9,6 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { localization } from '../../lib/localization';
 import { postsMutation } from '../../graphql/mutations/post.mutation';
+import { textLength } from '../../lib/textlength';
 
 const useStyles = makeStyles({
   item: {
@@ -81,7 +82,7 @@ function Category(props: Props) {
       },
       updateQuery: (prev, { fetchMoreResult, variables }) => {
         if (!fetchMoreResult) return prev;
-        
+
         return {
           ...fetchMoreResult,
           Category: {
@@ -107,10 +108,10 @@ function Category(props: Props) {
         <GridListTile rows={1} cols={index % 3 === 0 ? 2 : 1} key={item.id} component={Link} to={`/post/${id}`} className={classes.tile}>
           <Paper variant={'outlined'} color={'primary'} className={classes.item}>
             <Typography variant={'h6'}>
-              {title.length >= 20 ? title.substring(0, 20) + '...' : title}
+              {textLength(title, 20)}
             </Typography>
             <Typography variant={'body1'}>
-              {message.length >= 20 ? message.substring(0, 20) + '...' : message}
+              {textLength(message, 20)}
             </Typography>
           </Paper>
         </GridListTile>

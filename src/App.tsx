@@ -30,7 +30,7 @@ const client = new ApolloClient({
       });
     }),
     new HttpLink({
-      uri: 'http://localhost:4000'
+      uri: 'https://qa-app-backend.herokuapp.com/'
     }),
   ]),
 });

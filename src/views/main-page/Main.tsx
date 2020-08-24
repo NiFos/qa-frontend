@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, GridList, GridListTile, Paper, makeStyles, Divider } from '@material-ui/core';
+import { Container, Typography, GridList, GridListTile, Paper, makeStyles } from '@material-ui/core';
 import { postsQueries } from '../../graphql/queries/posts.query';
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';

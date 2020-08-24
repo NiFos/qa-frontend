@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, GridList, GridListTile, Paper, makeStyles } from '@material-ui/core';
+import { Container, Typography, GridList, GridListTile, Paper, makeStyles, Divider } from '@material-ui/core';
 import { postsQueries } from '../../graphql/queries/posts.query';
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
@@ -51,7 +51,7 @@ export function Main(props: Props) {
       );
       return (
         <div>
-          <Typography variant={'h5'}>{category.title}</Typography>
+          <Typography variant={'h3'}>{category.title}</Typography>
           <GridList cols={2}>
             {posts}
           </GridList>

@@ -19,6 +19,8 @@ const useStyles = makeStyles({
     position: 'fixed',
     top: 0,
     left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: '#fff',
     height: '100%',
     zIndex: 998
@@ -71,7 +73,7 @@ export function Menu(props: Props) {
 
       setUsername(userData.Me.profile.username);
     } catch (error) { }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   function Categories() {
@@ -99,7 +101,7 @@ export function Menu(props: Props) {
   function Layout() {
     return (
       <Container className={classes.MenuLayout}>
-        <Typography variant={'h2'}>{localization('logo')}</Typography>
+        <Link to={'/'} onClick={handleOpen}><Typography variant={'h2'}>{localization('logo')}</Typography></Link>
         <Container>
           {
             username

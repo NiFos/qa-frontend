@@ -51,7 +51,7 @@ export function Main(props: Props) {
       );
       return (
         <div>
-          <Typography variant={'h5'}>{category.title}</Typography>
+          <Typography variant={'h3'}>{category.title}</Typography>
           <GridList cols={2}>
             {posts}
           </GridList>

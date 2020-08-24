@@ -45,6 +45,6 @@ const strings: any = {
   },
 }
 
-export function localization(string: string = 'undefined', language: string = 'ru') {
+export function localization(string: string = 'undefined', language: string = 'en') {
   return strings[language][string];
 }

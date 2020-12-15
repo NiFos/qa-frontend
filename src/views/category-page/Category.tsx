@@ -1,47 +1,56 @@
-import React from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { postsQueries } from '../../graphql/queries/posts.query';
-import { withRouter, Link } from 'react-router-dom';
-import { Container, Typography, GridList, GridListTile, Paper, makeStyles } from '@material-ui/core';
-import { Loading } from '../components/Loading/Loading';
-import { AddPostDrawer } from '../components/Drawers/AddPostDrawer';
-import AddIcon from '@material-ui/icons/Add';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { localization } from '../../lib/localization';
-import { postsMutation } from '../../graphql/mutations/post.mutation';
-import { textLength } from '../../lib/textlength';
+import React from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { postsQueries } from "../../graphql/queries/posts.query";
+import { withRouter, Link } from "react-router-dom";
+import {
+  Container,
+  Typography,
+  GridList,
+  GridListTile,
+  Paper,
+  makeStyles,
+} from "@material-ui/core";
+import { Loading } from "../components/Loading/Loading";
+import { AddPostDrawer } from "../components/Drawers/add-post-drawer";
+import AddIcon from "@material-ui/icons/Add";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { localization } from "../../lib/localization";
+import { postsMutation } from "../../graphql/mutations/post.mutation";
+import { textLength } from "../../lib/text-length";
 
 const useStyles = makeStyles({
   item: {
-    padding: '0.3rem',
-    height: '100%',
+    padding: "0.3rem",
+    height: "100%",
   },
   tile: {
-    textDecoration: 'none'
+    textDecoration: "none",
   },
   addPost: {
-    textAlign: 'center'
-  }
+    textAlign: "center",
+  },
 });
 
 interface Props {
-  history: any,
-  location: any,
-  match: any
-
+  history: any;
+  location: any;
+  match: any;
 }
 
 function Category(props: Props) {
   const [postDrawer, setPostDrawer] = React.useState(false);
   const pageSize = 10;
-  const { data, loading, error, fetchMore, client } = useQuery(postsQueries.GET_CATEGORY, {
-    variables: {
-      id: props.match.params.id,
-      after: '',
-      pageSize: pageSize,
-    },
-    fetchPolicy: 'network-only'
-  });
+  const { data, loading, error, fetchMore, client } = useQuery(
+    postsQueries.GET_CATEGORY,
+    {
+      variables: {
+        id: props.match.params.id,
+        after: "",
+        pageSize: pageSize,
+      },
+      fetchPolicy: "network-only",
+    }
+  );
   const [addPost] = useMutation(postsMutation.CREATE_POST);
   const classes = useStyles();
 
@@ -52,13 +61,12 @@ function Category(props: Props) {
   function getCategoriesLocal() {
     try {
       const data = client.readQuery({
-        query: postsQueries.GET_CATEGORIES
+        query: postsQueries.GET_CATEGORIES,
       });
 
       return data.Categories;
-    } catch (error) { }
+    } catch (error) {}
   }
-
 
   function submitPost(title: string, message: string, category: string) {
     addPost({
@@ -66,9 +74,9 @@ function Category(props: Props) {
         data: {
           title,
           message,
-          category
-        }
-      }
+          category,
+        },
+      },
     });
     handlePostDrawer();
   }
@@ -92,50 +100,76 @@ function Category(props: Props) {
               posts: [
                 ...prev.Category.posts.posts,
                 ...fetchMoreResult.Category.posts.posts,
-              ]
-            }
-          }
-        }
-      }
-    })
+              ],
+            },
+          },
+        };
+      },
+    });
   }
 
   function Posts(): JSX.Element[] {
-    let posts: any[] = data.Category.posts.posts.map((item: any, index: number) => {
-      const { title, message, id } = item;
+    let posts: any[] = data.Category.posts.posts.map(
+      (item: any, index: number) => {
+        const { title, message, id } = item;
 
-      return (
-        <GridListTile rows={1} cols={index % 3 === 0 ? 2 : 1} key={item.id} component={Link} to={`/post/${id}`} className={classes.tile}>
-          <Paper variant={'outlined'} color={'primary'} className={classes.item}>
-            <Typography variant={'h6'}>
-              {textLength(title, 20)}
-            </Typography>
-            <Typography variant={'body1'}>
-              {textLength(message, 20)}
-            </Typography>
-          </Paper>
-        </GridListTile>
-      );
-    });
+        return (
+          <GridListTile
+            rows={1}
+            cols={index % 3 === 0 ? 2 : 1}
+            key={item.id}
+            component={Link}
+            to={`/post/${id}`}
+            className={classes.tile}
+          >
+            <Paper
+              variant={"outlined"}
+              color={"primary"}
+              className={classes.item}
+            >
+              <Typography variant={"h6"}>{textLength(title, 20)}</Typography>
+              <Typography variant={"body1"}>
+                {textLength(message, 20)}
+              </Typography>
+            </Paper>
+          </GridListTile>
+        );
+      }
+    );
     posts.unshift(
-      <GridListTile rows={1} cols={2} key={'newPost'} className={[classes.tile, classes.addPost].join(' ')}>
-        <Paper variant={'outlined'} color={'primary'} className={classes.item} onClick={handlePostDrawer}>
-          <Typography variant={'h6'}>{localization('addPost')}</Typography>
-          <AddIcon fontSize={'large'} />
+      <GridListTile
+        rows={1}
+        cols={2}
+        key={"newPost"}
+        className={[classes.tile, classes.addPost].join(" ")}
+      >
+        <Paper
+          variant={"outlined"}
+          color={"primary"}
+          className={classes.item}
+          onClick={handlePostDrawer}
+        >
+          <Typography variant={"h6"}>{localization("addPost")}</Typography>
+          <AddIcon fontSize={"large"} />
         </Paper>
       </GridListTile>
     );
     if (data.Category.posts.hasMore) {
       posts.push(
-        <GridListTile rows={1} cols={2} key={'loadMore'} className={[classes.tile, classes.addPost].join(' ')}>
+        <GridListTile
+          rows={1}
+          cols={2}
+          key={"loadMore"}
+          className={[classes.tile, classes.addPost].join(" ")}
+        >
           <Paper
-            variant={'outlined'}
-            color={'primary'}
+            variant={"outlined"}
+            color={"primary"}
             className={classes.item}
             onClick={loadMore}
           >
-            <Typography variant={'h6'}>{localization('loadMore')}</Typography>
-            <ExpandMoreIcon fontSize={'large'} />
+            <Typography variant={"h6"}>{localization("loadMore")}</Typography>
+            <ExpandMoreIcon fontSize={"large"} />
           </Paper>
         </GridListTile>
       );
@@ -152,24 +186,19 @@ function Category(props: Props) {
         categories={getCategoriesLocal()}
         submit={submitPost}
       />
-      {
-        loading
-          ? <Loading />
-          : error
-            ? <Typography variant={'h5'} color={'error'}>
-              {error}
-            </Typography>
-            : <Container>
-              <Typography variant={'h4'}>
-                {data.Category.title}
-              </Typography>
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <Typography variant={"h5"} color={"error"}>
+          {error}
+        </Typography>
+      ) : (
+        <Container>
+          <Typography variant={"h4"}>{data.Category.title}</Typography>
 
-              <GridList cols={2}>
-                {Posts()}
-              </GridList>
-            </Container>
-      }
-
+          <GridList cols={2}>{Posts()}</GridList>
+        </Container>
+      )}
     </React.Fragment>
   );
 }

@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-interface FormData {
+export interface AuthFormData {
   email: {
     value: string;
     valid: boolean;
@@ -35,7 +35,7 @@ interface FormData {
     touched: boolean;
   };
 }
-const initialFormData: FormData = {
+const initialFormData: AuthFormData = {
   email: {
     touched: false,
     valid: true,
@@ -54,8 +54,7 @@ const initialFormData: FormData = {
 };
 
 interface Props {
-  authHandler: (formData: FormData) => void;
-  oauthHandler: (type: string) => void;
+  authHandler: (formData: AuthFormData, isReg: boolean) => void;
 }
 
 export function LoginForm(props: Props) {
@@ -96,7 +95,7 @@ export function LoginForm(props: Props) {
   }
 
   function submitForm() {
-    props.authHandler(formData);
+    props.authHandler(formData, authType === "reg");
   }
 
   return (
@@ -154,7 +153,7 @@ function AuthRadio(props: AuthProps) {
 }
 
 interface FieldsProps {
-  data: FormData;
+  data: AuthFormData;
   dataHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 function RegFields(props: FieldsProps) {

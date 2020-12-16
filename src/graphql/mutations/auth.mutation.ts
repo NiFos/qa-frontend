@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const authMutation = {
   LOGIN: gql`
@@ -11,9 +11,4 @@ export const authMutation = {
       Reg(data: $data)
     }
   `,
-  LOGIN_OAUTH: gql`
-    mutation LoginOauth($token: String) {
-      LoginOauth(token: $token)
-    }
-  `,
-}
+};

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useMutation, useLazyQuery } from "@apollo/react-hooks";
 import { postsQueries } from "../../graphql/queries/posts.query";
 import { withRouter, Link } from "react-router-dom";
 import {
@@ -28,6 +29,7 @@ const useStyles = makeStyles({
   },
   addPost: {
     textAlign: "center",
+    cursor: "pointer",
   },
 });
 
@@ -40,19 +42,27 @@ interface Props {
 function Category(props: Props) {
   const [postDrawer, setPostDrawer] = React.useState(false);
   const pageSize = 10;
-  const { data, loading, error, fetchMore, client } = useQuery(
-    postsQueries.GET_CATEGORY,
-    {
-      variables: {
-        id: props.match.params.id,
-        after: "",
-        pageSize: pageSize,
-      },
-      fetchPolicy: "network-only",
-    }
-  );
-  const [addPost] = useMutation(postsMutation.CREATE_POST);
+  const [
+    getCategory,
+    { data, loading, error, fetchMore, client },
+  ] = useLazyQuery(postsQueries.GET_CATEGORY, {
+    variables: {
+      id: props.match.params.id,
+      after: "",
+      pageSize: pageSize,
+    },
+    fetchPolicy: "network-only",
+  });
+  const [addPost] = useMutation(postsMutation.CREATE_POST, {
+    onCompleted() {
+      getCategory();
+    },
+  });
   const classes = useStyles();
+
+  React.useEffect(() => {
+    getCategory();
+  }, []);
 
   function handlePostDrawer() {
     setPostDrawer(!postDrawer);
@@ -193,11 +203,13 @@ function Category(props: Props) {
           {error}
         </Typography>
       ) : (
-        <Container>
-          <Typography variant={"h4"}>{data.Category.title}</Typography>
+        data && (
+          <Container>
+            <Typography variant={"h4"}>{data.Category.title}</Typography>
 
-          <GridList cols={2}>{Posts()}</GridList>
-        </Container>
+            <GridList cols={2}>{Posts()}</GridList>
+          </Container>
+        )
       )}
     </React.Fragment>
   );

@@ -6,6 +6,7 @@ import {
   Typography,
   Grid,
   Button,
+  Divider,
 } from "@material-ui/core";
 import { Close, MenuOpen } from "@material-ui/icons";
 import { localization } from "../../../lib/localization";
@@ -51,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
   LogInBtn: {
     position: "absolute",
     bottom: "1rem",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
   },
 }));
 
@@ -101,7 +106,7 @@ export function Menu(props: Props) {
     return data.Categories.map((item: Category) => (
       <Grid item xs={4} key={item.id}>
         <Button
-          variant={"text"}
+          variant={"contained"}
           color={"primary"}
           className={classes.Paper}
           fullWidth={true}
@@ -118,25 +123,28 @@ export function Menu(props: Props) {
   function Layout() {
     return (
       <Container className={classes.MenuLayout}>
-        <Link to={"/"} onClick={handleOpen} className={classes.LayoutLogo}>
-          <Typography variant={"h2"}>{localization("logo")}</Typography>
-        </Link>
-        <Container>
-          {username ? (
-            <Typography variant={"h5"}>{username}</Typography>
-          ) : (
-            <Button
-              variant={"contained"}
-              color={"primary"}
-              component={Link}
-              to={"/login"}
-              onClick={handleOpen}
-              className={classes.btn}
-            >
-              {localization("login")}
-            </Button>
-          )}
-        </Container>
+        <div className={classes.header}>
+          <Link to={"/"} onClick={handleOpen} className={classes.LayoutLogo}>
+            <Typography variant={"h2"}>{localization("logo")}</Typography>
+          </Link>
+          <div>
+            {username ? (
+              <Typography variant={"h5"}>{username}</Typography>
+            ) : (
+              <Button
+                variant={"contained"}
+                color={"primary"}
+                component={Link}
+                to={"/login"}
+                onClick={handleOpen}
+                className={classes.btn}
+              >
+                {localization("login")}
+              </Button>
+            )}
+          </div>
+        </div>
+        <Divider />
         <Typography variant={"h4"} className={classes.categoriesLogo}>
           {localization("categories")}
         </Typography>

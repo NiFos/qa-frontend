@@ -67,7 +67,12 @@ export function Main(props: Props) {
               className={classes.tile}
               key={item.id}
             >
-              <Paper className={classes.item} elevation={3}>
+              <Paper
+                className={classes.item}
+                elevation={3}
+                variant={"outlined"}
+                color={"primary"}
+              >
                 <Typography variant={"h6"}>
                   {textLength(item.title, 20)}
                 </Typography>
@@ -86,7 +91,7 @@ export function Main(props: Props) {
           className={classes.tile}
           key={category.id}
         >
-          <Paper className={classes.item} elevation={3}>
+          <Paper className={classes.item} elevation={3} variant={"outlined"}>
             <Typography variant={"h6"}>{localization("loadMore")}</Typography>
           </Paper>
         </GridListTile>

@@ -63,7 +63,7 @@ export function Comments(props: Props): JSX.Element {
     let comments = props.comments.map((item: any) => {
       return (
         <GridListTile key={item.id}>
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} variant={"outlined"}>
             <Link to={`/user/${item.author.id}`}>{item.author.username}</Link>
             <Typography variant={"body1"}>{item.message}</Typography>
             <Typography variant={"caption"}>
@@ -97,6 +97,7 @@ export function Comments(props: Props): JSX.Element {
       <GridListTile key={"newComment"}>
         <Paper
           className={[classes.newComment, classes.paper].join(" ")}
+          variant={"outlined"}
           onClick={handleCommentDrawer}
         >
           <Typography variant={"h6"}>{localization("addComment")}</Typography>
